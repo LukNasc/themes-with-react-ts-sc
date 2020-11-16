@@ -1,26 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { ThemeProvider } from 'styled-components';
+import Menu from './components/Menu';
+
+//themes
+import light from './styles/themes/light'
+import dark from './styles/themes/dark'
+
+//Importando o estilo global
+import GlobalStyle from './styles/globals'
+
+import { Container } from './style'
 
 function App() {
+  //Controla qual tema está sendo utilizado dinâmicamente
+  const [theme, setTheme] = useState(light)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={theme}>
+      <Container>
+        <GlobalStyle />
+        <Menu onChange={
+          checked => {
+            //Se o switch for marcado aplica o tema dark caso contrário light
+            setTheme(checked ? dark : light)
+          }
+        } />
+        <h1>Home</h1>
+      </Container>
+    </ThemeProvider>
+
+
+  )
 }
 
 export default App;
